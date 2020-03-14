@@ -39,5 +39,10 @@ namespace ExcelCorrector
         {
             frmMain.Content = new CorrectionKeysListPage(this);
         }
+
+        private void OpenSingleFileCorrector(object sender, RoutedEventArgs e)
+        {
+            frmMain.Content = new SingleFileCorrector();
+        }
     }
 }

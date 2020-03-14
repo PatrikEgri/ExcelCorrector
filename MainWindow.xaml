@@ -15,7 +15,10 @@
         </Grid.RowDefinitions>
 
         <Menu>
-            <MenuItem Header="File"/>
+            <MenuItem Header="File">
+                <MenuItem Header="Correct single file" Click="OpenSingleFileCorrector"/>
+                <MenuItem Header="Correct multiple files"/>
+            </MenuItem>
             <MenuItem Header="Correction Keys" Click="OpenCorrectionKeys"/>
         </Menu>
 
