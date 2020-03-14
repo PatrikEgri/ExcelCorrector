@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Keys xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Key Name="B1_Eq" ColumnIndex="1" RowIndex="0">
+    <Conditions>
+      <Condition Type="Equivalence" Expression="20" Points="5" />
+      <Condition Type="Containment" Expression="=" Points="5" />
+    </Conditions>
+  </Key>
+  <Key Name="C3_Eq" ColumnIndex="2" RowIndex="2">
+    <Conditions>
+      <Condition Type="Containment" Expression="=" Points="5" />
+      <Condition Type="Equivalence" Expression="50" Points="5.5" />
+    </Conditions>
+  </Key>
+</Keys>
