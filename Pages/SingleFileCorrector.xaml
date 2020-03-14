@@ -13,6 +13,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -26,8 +27,12 @@
         <Button x:Name="btnOpenFile" BorderBrush="#444" Content="Open file" Margin="0 5 5 5" Grid.Column="2" FontSize="16" FontWeight="DemiBold" Background="#fafafd" Click="btnOpenFile_Click"/>
 
         <Label Content="Correctionkey" Margin="5 0 5 0" Padding="0 3 0 0" Grid.Row="1" FontSize="16" FontWeight="DemiBold"/>
-        <ListView x:Name="lsvKeys" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" FontSize="16" FontWeight="DemiBold" Margin="0 0 5 5" BorderBrush="#444" SelectionChanged="lsvKeys_SelectionChanged" ItemsSource="{Binding Path=Files}"/>
+        <ListView x:Name="lsvKeys" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" FontSize="16" FontWeight="DemiBold" Margin="0 0 5 0" BorderBrush="#444" SelectionChanged="lsvKeys_SelectionChanged" ItemsSource="{Binding Path=Files}"/>
 
-        <Button x:Name="btnCorrect" IsEnabled="False" Content="Correct" FontSize="16" FontWeight="DemiBold" Background="#fafafd" Margin="0 0 5 5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2"/>
+        <Label Content="Path to save" Grid.Row="2" FontSize="16" FontWeight="DemiBold" Margin="5 5 5 0" Padding="0"/>
+        <TextBox x:Name="tbPathToSave" Text="{Binding Path=PathToSave}" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0 5 0 5" BorderBrush="#444"/>
+        <Button x:Name="btnSetSavePath" BorderBrush="#444" Content="Path to save" Margin="0 5 5 5" Grid.Column="2" Grid.Row="2" FontSize="16" FontWeight="DemiBold" Background="#fafafd" Click="btnSetSavePath_Click"/>
+
+        <Button x:Name="btnCorrect" IsEnabled="False" Content="Correct" FontSize="16" FontWeight="DemiBold" Background="#fafafd" Margin="0 0 5 5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Click="btnCorrect_Click"/>
     </Grid>
 </Page>

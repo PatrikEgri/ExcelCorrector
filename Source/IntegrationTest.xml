@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Keys xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Key Name="Feladat1" ColumnIndex="0" RowIndex="0">
+    <Conditions>
+      <Condition Type="Equivalence" Expression="5" Points="10" />
+    </Conditions>
+  </Key>
+  <Key Name="Feladat2" ColumnIndex="0" RowIndex="1">
+    <Conditions>
+      <Condition Type="Equivalence" Expression="10" Points="10" />
+    </Conditions>
+  </Key>
+  <Key Name="Feladat3" ColumnIndex="0" RowIndex="2">
+    <Conditions>
+      <Condition Type="Containment" Expression="SUM" Points="5" />
+      <Condition Type="Equivalence" Expression="15" Points="5" />
+    </Conditions>
+  </Key>
+</Keys>

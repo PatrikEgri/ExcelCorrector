@@ -12,4 +12,8 @@
     <Folder Include="Source\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="5.0.4" />
+  </ItemGroup>
+
 </Project>
