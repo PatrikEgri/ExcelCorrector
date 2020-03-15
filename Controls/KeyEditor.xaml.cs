@@ -1,4 +1,5 @@
 ﻿using ExcelCorrector.Pages;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,12 +9,17 @@ namespace ExcelCorrector.Controls
     /// <summary>
     /// Interaction logic for KeyEditor.xaml
     /// </summary>
-    public partial class KeyEditor : UserControl
+    public partial class KeyEditor : UserControl, INotifyPropertyChanged
     {
         /// <summary>
         /// Parent object.
         /// </summary>
         CorrectionKeyPage _owner;
+
+        /// <summary>
+        /// The event that will be invoked when a property changed.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// The main object to be edit.
@@ -31,7 +37,11 @@ namespace ExcelCorrector.Controls
             } 
             set
             {
-                Key.CalculateIndexesFromCoordinate(value);
+                if (value != Key.CalculateCoordinateFromIndexes())
+                {
+                    Key.CalculateIndexesFromCoordinate(value);
+                    OnPropertyChanged("Coordinate");
+                }
             }
         }
 
@@ -41,7 +51,14 @@ namespace ExcelCorrector.Controls
         public string KeyName
         {
             get => Key.Name;
-            set => Key.Name = value;
+            set
+            {
+                if (value != Key.Name)
+                {
+                    Key.Name = value;
+                    OnPropertyChanged("KeyName");
+                }
+            }
         }
 
         /// <summary>
@@ -114,6 +131,15 @@ namespace ExcelCorrector.Controls
         {
             Key.Conditions.Remove(condition);
             FillGrid();
+        }
+
+        /// <summary>
+        /// Invokes the PropertyChanged event with the specified property.
+        /// </summary>
+        /// <param name="property">The property that has been changed</param>
+        void OnPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
         /// <summary>

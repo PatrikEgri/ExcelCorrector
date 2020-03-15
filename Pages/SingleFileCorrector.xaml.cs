@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace ExcelCorrector.Pages
 {
@@ -155,7 +156,7 @@ namespace ExcelCorrector.Pages
         /// <param name="sender">The Button that triggered this event</param>
         void btnOpenFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
             
             if (fileDialog.ShowDialog() == true)
                 Filename = fileDialog.FileName;
@@ -165,7 +166,7 @@ namespace ExcelCorrector.Pages
         /// 
         /// </summary>
         /// <param name="sender">The ListView that triggered this event</param>
-        private void lsvKeys_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void lsvKeys_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lsvKeys.SelectedItems != null)
             {
@@ -179,29 +180,59 @@ namespace ExcelCorrector.Pages
         /// Requests the correction.
         /// </summary>
         /// <param name="sender">The Button that triggered this event</param>
-        private void btnCorrect_Click(object sender, RoutedEventArgs e)
+        void btnCorrect_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 new Corrector(Filename, CorrectionKey, PathToSave).CorrectSingleFile();
-                MessageBox.Show("Sikeres javítás!");
+                System.Windows.MessageBox.Show("Sikeres javítás!");
             }
             catch (Exception x)
             {
-                MessageBox.Show(x.Message);
+                System.Windows.MessageBox.Show(x.Message);
             }
         }
 
         /// <summary>
-        /// Opens FileDialog to set PathToSave.
+        /// Opens FolderBrowserDialog to set PathToSave.
         /// </summary>
         /// <param name="sender">The Button that triggered this event</param>
-        private void btnSetSavePath_Click(object sender, RoutedEventArgs e)
+        void btnSetSavePath_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-            if (fileDialog.ShowDialog() == true)
-                PathToSave = fileDialog.FileName.Remove(fileDialog.FileName.LastIndexOf('\\'));
+            if (fbd.ShowDialog() == DialogResult.OK)
+                PathToSave = fbd.SelectedPath;
         }
+
+        /// <summary>
+        /// Binds the path of save to the folder where the file to be corrected is.
+        /// </summary>
+        /// <param name="sender">The CheckBox that triggered this event</param>
+        void cbSamePath_Checked(object sender, RoutedEventArgs e)
+        {
+            PathToSave = Filename.Remove(Filename.LastIndexOf('\\'));
+            PropertyChanged += BindSavePath;
+            tbPathToSave.IsEnabled = false;
+            btnSetSavePath.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Unbinds the path of save to the folder where the file to be corrected is.
+        /// </summary>
+        /// <param name="sender">The CheckBox that triggered this event</param>
+        void cbSamePath_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PropertyChanged -= BindSavePath;
+            tbPathToSave.IsEnabled = true;
+            btnSetSavePath.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Sets the path of save to the folder where the file to be corrected is.
+        /// </summary>
+        void BindSavePath(object sender, PropertyChangedEventArgs e) =>
+             PathToSave = Filename.Remove(Filename.LastIndexOf('\\'));
+        
     }
 }

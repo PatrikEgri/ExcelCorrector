@@ -1,5 +1,6 @@
 ﻿using ExcelCorrector.Models;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,12 +10,17 @@ namespace ExcelCorrector.Controls
     /// <summary>
     /// Interaction logic for ConditionEditor.xaml
     /// </summary>
-    public partial class ConditionEditor : UserControl
+    public partial class ConditionEditor : UserControl, INotifyPropertyChanged
     {
         /// <summary>
         /// Parent object.
         /// </summary>
         KeyEditor _owner;
+
+        /// <summary>
+        /// The event that will be invoked when a property changed.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// The main object to be edit.
@@ -27,7 +33,14 @@ namespace ExcelCorrector.Controls
         public ConditionTypes Type
         {
             get => Condition.Type;
-            set => Condition.Type = value;            
+            set
+            {
+                if (value != Condition.Type)
+                {
+                    Condition.Type = value;
+                    OnPropertyChanged("Type");
+                }
+            }
         }
 
         /// <summary>
@@ -35,8 +48,15 @@ namespace ExcelCorrector.Controls
         /// </summary>
         public string Expression
         {
-            get => Condition.Expression; 
-            set=> Condition.Expression = value;
+            get => Condition.Expression;
+            set
+            {
+                if (value != Condition.Expression)
+                {
+                    Condition.Expression = value;
+                    OnPropertyChanged("Expression");
+                }
+            }
         }
 
         /// <summary>
@@ -49,7 +69,11 @@ namespace ExcelCorrector.Controls
             {
                 try
                 {
-                    Condition.Points = float.Parse(value);
+                    if (float.Parse(value) != Condition.Points)
+                    {
+                        Condition.Points = float.Parse(value);
+                        OnPropertyChanged("Points");
+                    }
                 }
                 catch (Exception x)
                 {
@@ -70,6 +94,15 @@ namespace ExcelCorrector.Controls
             InitializeComponent();
             this.DataContext = this;
             cbType.ItemsSource = Enum.GetValues(typeof(ConditionTypes)).Cast<ConditionTypes>();
+        }
+
+        /// <summary>
+        /// Invokes the PropertyChanged event with the specified property.
+        /// </summary>
+        /// <param name="property">The property that has been changed</param>
+        void OnPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
         /// <summary>

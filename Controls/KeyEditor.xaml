@@ -21,10 +21,10 @@
         </Grid.RowDefinitions>
 
         <Label Content="Name" Margin="5"/>
-        <TextBox Grid.Column="1" Margin="5" Text="{Binding KeyName}"/>
+        <TextBox Grid.Column="1" Margin="5" Text="{Binding Path=KeyName}"/>
 
         <Label Content="Coordinate" Grid.Row="1" Margin="5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Coordinate}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding Path=Coordinate}"/>
 
         <Button x:Name="btnAdd" Click="btnAdd_Click" Content="Add Condition" Padding="5" Background="#fafafd" Margin="5" Grid.Column="2" Grid.RowSpan="2"/>
         <Button x:Name="btnDelete" Click="btnDelete_Click" Content="X" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5">
